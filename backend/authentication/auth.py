@@ -4,6 +4,8 @@ app = Flask(__name__)
 
 @app.route('/login', methods = ['POST'])
 def login():
+    conn = sqlite3.connect("user_db.db")
+    cursor = conn.cursor()
     try:
         if user in user_db:
             if user_db[user] == password:
