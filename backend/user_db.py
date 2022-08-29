@@ -24,3 +24,4 @@ cursor.execute(""" INSERT INTO USERS (Username, Password)
 VALUES ('Harshita', '8642') """)
 
 conn.commit()
+conn.close()

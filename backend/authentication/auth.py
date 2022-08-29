@@ -1,23 +1,23 @@
 from flask import Flask, jsonify, request
+import sqlite3
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 
 @app.route('/login', methods = ['POST'])
 def login():
     conn = sqlite3.connect("user_db.db")
     cursor = conn.cursor()
-    try:
-        if user in user_db:
-            if user_db[user] == password:
-                return "Success", 200
-            else:
-                return jsonify({"msg":"invalid password"}), 400
-        else:
-            return jsonify({"msg":"User does not exist. Signup instead"}), 400
-    except Exception as e:
-        print(e)
-        return jsonify({"msg":"Something went wrong"}), 500
-
+    req = request.get_json()
+    user, password = req["userId"], req["password"]
+    cursor.execute(f"select * from USERS where Username = '{user}' AND Password = '{password}'")
+    y = cursor.fetchone()
+    if y:
+        return jsonify({"msg":"success"}), 200
+    else:
+        return jsonify({"msg":"invalid password"}), 400
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(debug=True, port = 5050)
