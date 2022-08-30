@@ -11,10 +11,13 @@ def add_task():
     cursor = conn.cursor()
     if request.method == "GET":
         cursor.execute("SELECT * FROM `TASKS`")
-        results = cursor.fetchall()
-        print(results)
-        if results:
-            return jsonify({"msg":"success"}), 200
+        res = cursor.fetchall()
+        task_dic={}
+        for i in res:
+            task_dic[i[0]] = [i[1], i[2], i[3]]
+        print(task_dic)
+        if res:
+            return jsonify({"msg": res}), 200
         else:
             return jsonify({"msg":"invalid password"}), 400
 
