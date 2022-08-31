@@ -19,7 +19,7 @@ def add_task():
         if res:
             return jsonify({"msg": res}), 200
         else:
-            return jsonify({"msg":"invalid password"}), 400
+            return jsonify({"msg":"no task present"}), 400
 
     elif request.method == "POST":
         req = request.get_json()
